@@ -66,7 +66,9 @@ public class MainActivity extends AppCompatActivity implements ReposView {
         RxSearchView.queryTextChanges(searchView)
                 .map(charSequence -> charSequence.toString())
                 .debounce(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-                .subscribe(charSequence -> mReposPresenter.getRepos(charSequence));
+                .subscribe(charSequence -> {
+                    mReposPresenter.getRepos(charSequence);
+                }, Throwable::printStackTrace);
 
         return true;
     }
@@ -107,3 +109,5 @@ public class MainActivity extends AppCompatActivity implements ReposView {
 
     }
 }
+
+

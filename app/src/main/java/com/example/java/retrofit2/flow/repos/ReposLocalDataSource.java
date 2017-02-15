@@ -17,12 +17,12 @@ public class ReposLocalDataSource extends BaseLocalDataSource implements ReposDa
     public Single<List<Repo>> getRepos(String user) {
         return Single.create(subscriber ->{
             realm.executeTransaction(innerRealm ->{
-               RealmResults list = innerRealm.where(Repo.class).contains("user", user)
+               RealmResults list = innerRealm.where(Repo.class).equalTo("name", user)
                        .findAll();
                 if(list == null) {
                     subscriber.onError(new Exception("vse ploho"));
                 } else {
-                    List repos = innerRealm.copyFromRealm(list);
+                    List<Repo> repos = innerRealm.copyFromRealm(list);
                     if(repos != null) {
                         subscriber.onSuccess(repos);
                     } else {

@@ -11,6 +11,7 @@ import com.example.java.retrofit2.model.Repo;
 
 import java.util.List;
 
+
 /**
  * Created by java on 13.02.2017.
  */
@@ -44,16 +45,16 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ReposViewHol
 
     public static class ReposViewHolder extends RecyclerView.ViewHolder {
 
+        private TextView mTextRepo;
 
         public ReposViewHolder(View itemView) {
             super(itemView);
+            TextView mTextRepo = (TextView) itemView.findViewById(R.id.textRepo);
 
         }
 
         private void bindView(Repo repo) {
-
-
-
+            mTextRepo.setText(repo.getId().toString());
         }
     }
 }
