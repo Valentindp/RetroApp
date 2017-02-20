@@ -5,14 +5,13 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 
-public class Repo extends RealmObject {
-
-
-
+public class Repo extends RealmObject{
     @SerializedName("id")
     @Expose
+    @PrimaryKey
     private Integer id;
     @SerializedName("name")
     @Expose
@@ -65,6 +64,7 @@ public class Repo extends RealmObject {
     @SerializedName("branches_url")
     @Expose
     private String branchesUrl;
+
     @SerializedName("tags_url")
     @Expose
     private String tagsUrl;
@@ -167,9 +167,7 @@ public class Repo extends RealmObject {
     @SerializedName("svn_url")
     @Expose
     private String svnUrl;
-    @SerializedName("homepage")
-    @Expose
-    private String homepage;
+
     @SerializedName("size")
     @Expose
     private Integer size;
@@ -197,9 +195,7 @@ public class Repo extends RealmObject {
     @SerializedName("forks_count")
     @Expose
     private Integer forksCount;
-    @SerializedName("mirror_url")
-    @Expose
-    private String mirrorUrl;
+
     @SerializedName("open_issues_count")
     @Expose
     private Integer openIssuesCount;
@@ -632,14 +628,6 @@ public class Repo extends RealmObject {
         this.svnUrl = svnUrl;
     }
 
-    public String getHomepage() {
-        return homepage;
-    }
-
-    public void setHomepage(String homepage) {
-        this.homepage = homepage;
-    }
-
     public Integer getSize() {
         return size;
     }
@@ -710,14 +698,6 @@ public class Repo extends RealmObject {
 
     public void setForksCount(Integer forksCount) {
         this.forksCount = forksCount;
-    }
-
-    public String getMirrorUrl() {
-        return mirrorUrl;
-    }
-
-    public void setMirrorUrl(String mirrorUrl) {
-        this.mirrorUrl = mirrorUrl;
     }
 
     public Integer getOpenIssuesCount() {

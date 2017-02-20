@@ -14,5 +14,5 @@ public interface ReposView {
 
     Context getContext();
 
-    void showRepos(List<Repo> repos);
+    void showRepos(List<Repo> list);
 }

@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -32,6 +33,7 @@ import rx.functions.Func1;
 public class MainActivity extends AppCompatActivity implements ReposView {
     private RecyclerView mRecyclerView;
     private ReposPresenter mReposPresenter = new ReposPresenter();
+    protected ReposAdapter mReposAdapter = new ReposAdapter();
 
 
     @Override
@@ -43,14 +45,10 @@ public class MainActivity extends AppCompatActivity implements ReposView {
         mReposPresenter.onAttach(this);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(mReposAdapter);
 
-        final RecyclerView.LayoutManager layoutManager = new GridLayoutManager(
-                this,
-                1,
-                RecyclerView.VERTICAL,
-                false);
-        mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setHasFixedSize(true);
+
     }
 
     @Override
@@ -64,11 +62,8 @@ public class MainActivity extends AppCompatActivity implements ReposView {
         searchView.setQueryHint("Search...");
 
         RxSearchView.queryTextChanges(searchView)
-                .map(charSequence -> charSequence.toString())
-                .debounce(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-                .subscribe(charSequence -> {
-                    mReposPresenter.getRepos(charSequence);
-                }, Throwable::printStackTrace);
+                .debounce(3, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+                .subscribe(query -> mReposPresenter.getRepos(query.toString()));
 
         return true;
     }
@@ -100,13 +95,9 @@ public class MainActivity extends AppCompatActivity implements ReposView {
     }
 
     @Override
-    public void showRepos(List<Repo> repos) {
-
-        ReposAdapter reposAdapter = new ReposAdapter();
-        reposAdapter.setDataSource(repos);
-        mRecyclerView.setAdapter(reposAdapter);
-
-
+    public void showRepos(List<Repo> list) {
+        mReposAdapter.setDataSource(list);
+        mRecyclerView.setAdapter(mReposAdapter);
     }
 }
 
