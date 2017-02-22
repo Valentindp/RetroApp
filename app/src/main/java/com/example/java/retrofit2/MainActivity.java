@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements ReposView {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(mReposAdapter);
+       // mRecyclerView.setAdapter(mReposAdapter);
 
 
     }

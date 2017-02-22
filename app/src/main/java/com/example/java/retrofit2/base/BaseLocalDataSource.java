@@ -13,7 +13,6 @@ public abstract class BaseLocalDataSource implements BaseDataSource{
 
     @Override
     public void init(Context context) {
-        Realm.init(context);
         realm = Realm.getDefaultInstance();
     }
 }
