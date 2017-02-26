@@ -27,6 +27,7 @@ public abstract class BaseRemouteDataSource implements BaseDataSource {
                 .baseUrl(NEWS_ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
+                .client(client)
                 .build();
         //return retrofit.create(NewsApiInterface.class);
         repoService = retrofit.create(ReposService.class);
