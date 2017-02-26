@@ -2,6 +2,8 @@ package com.example.java.retrofit2.base;
 
 import android.content.Context;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -17,6 +19,10 @@ public abstract class BaseRemouteDataSource implements BaseDataSource {
 
     @Override
     public void init(Context context) {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(NEWS_ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())

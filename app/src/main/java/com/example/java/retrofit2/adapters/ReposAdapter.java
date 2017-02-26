@@ -18,7 +18,7 @@ import java.util.List;
 
 public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ReposViewHolder> {
 
-    List<Repo> mDataSource;
+    private List<Repo> mDataSource;
 
     @Override
     public ReposViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -35,7 +35,7 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ReposViewHol
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mDataSource.size();
     }
 
     public void setDataSource(List<Repo> dataSource) {
@@ -45,16 +45,16 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ReposViewHol
 
     public static class ReposViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView mTextRepo;
+        public TextView mTextRepo;
 
         public ReposViewHolder(View itemView) {
             super(itemView);
-            TextView mTextRepo = (TextView) itemView.findViewById(R.id.textRepo);
+            mTextRepo = (TextView) itemView.findViewById(R.id.textRepo);
 
         }
 
         private void bindView(Repo repo) {
-            mTextRepo.setText(repo.getId().toString());
+            mTextRepo.setText(repo.getName());
         }
     }
 }

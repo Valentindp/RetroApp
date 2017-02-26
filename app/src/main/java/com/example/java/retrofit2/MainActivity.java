@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -44,11 +45,7 @@ public class MainActivity extends AppCompatActivity implements ReposView {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
-        final RecyclerView.LayoutManager layoutManager = new GridLayoutManager(
-                this,
-                1,
-                RecyclerView.VERTICAL,
-                false);
+        final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
     }
@@ -58,16 +55,16 @@ public class MainActivity extends AppCompatActivity implements ReposView {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
+
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setQueryHint("Search...");
 
         RxSearchView.queryTextChanges(searchView)
-                .map(charSequence -> charSequence.toString())
                 .debounce(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
                 .subscribe(charSequence -> {
-                    mReposPresenter.getRepos(charSequence);
+                    mReposPresenter.getRepos(charSequence.toString());
                 }, Throwable::printStackTrace);
 
         return true;
@@ -108,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements ReposView {
 
 
     }
+
 }
 
 

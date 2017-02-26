@@ -43,15 +43,8 @@ public class ReposPresenter implements ReposDataSource {
     @Override
     public Single<List<Repo>> getRepos(String user) {
         Single<List<Repo>> single = mReposRepository.getRepos(user);
-        Subscription subscription = single.subscribe(
-                new Action1<List<Repo>>() {
-                    @Override
-                    public void call(List<Repo> list) {
-                        mView.showRepos(list);
-                    }
-                },
-                Throwable::printStackTrace);
-        mSubscriptionList.add(subscription);
+        single.subscribe(list -> mView.showRepos(list),
+                throwable -> throwable.printStackTrace()); // Throwable::printStackTrace);
         return single;
     }
 

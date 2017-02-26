@@ -22,19 +22,14 @@ public class ReposRepository implements ReposDataSource {
     @Override
     public Single<List<Repo>> getRepos(String user) {
         return mRemoteSource.getRepos(user)
-                .flatMap(new Func1<List<Repo>, Single<? extends List<Repo>>>() {
-                    @Override
-                    public Single<? extends List<Repo>> call(List<Repo> repos) {
-                        return mRemoteSource.getRepos(user);
-                    }
-                })
-                .onErrorResumeNext(mLocalSource.getRepos(user))
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(list -> mLocalSource.saveRepos(list))
+                .onErrorResumeNext(error -> mLocalSource.getRepos(user));
     }
 
     @Override
     public void clearRepos() {
-
+        mLocalSource.clearRepos();
     }
 
     @Override
