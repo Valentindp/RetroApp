@@ -47,7 +47,7 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ReposViewHol
 
         public TextView mTextRepo;
 
-        public ReposViewHolder(View itemView) {
+        private ReposViewHolder(View itemView) {
             super(itemView);
             mTextRepo = (TextView) itemView.findViewById(R.id.textRepo);
 

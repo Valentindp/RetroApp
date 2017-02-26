@@ -41,7 +41,7 @@ public class ReposLocalDataSource extends BaseLocalDataSource implements ReposDa
 
     public Single<List<Repo>> saveRepos(List<Repo> list){
         realm.executeTransaction(query -> {
-            realm.copyToRealm(list);
+            realm.copyToRealmOrUpdate(list);
         });
 
         return Single.just(list);

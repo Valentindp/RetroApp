@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by java on 15.02.2017.
@@ -11,12 +12,10 @@ import io.realm.RealmObject;
 
 public class Owner extends RealmObject {
 
-    public Owner() {
-    }
-
     @SerializedName("login")
     @Expose
     private String login;
+    @PrimaryKey
     @SerializedName("id")
     @Expose
     private Integer id;
